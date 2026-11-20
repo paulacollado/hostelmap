@@ -26,7 +26,7 @@ def grafica_evolucion(serie_local: pd.DataFrame, prediccion_30d: float, color: s
                     line={"color": color, "width": 3, "dash": "dot"},
                     marker={"symbol": ["circle", "star"], "size": [6, 14]},
                     hovertemplate="%{x|%d/%m/%Y}<br>%{y:.0f} reseñas (previsto)<extra></extra>")
-    fig.update_layout(height=260, margin={"l": 0, "r": 0, "t": 10, "b": 0},
+    fig.update_layout(separators=",.", height=260, margin={"l": 0, "r": 0, "t": 10, "b": 0},
                       showlegend=False, yaxis_title=None, xaxis_title=None,
                       hovermode="x unified")
     return fig

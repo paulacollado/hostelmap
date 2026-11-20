@@ -29,6 +29,7 @@ def _barras(df: pd.DataFrame, x: str, y: str, destacar: str | None, titulo_x: st
                       textposition="outside", cliponaxis=False,
                       hovertemplate="%{y}: %{x:.3f}<extra></extra>")
     fig.update_layout(height=230, margin={"l": 0, "r": 30, "t": 0, "b": 0},
+                      separators=",.",  # decimales con coma, como en el resto de la app
                       xaxis_title=titulo_x, yaxis_title=None,
                       yaxis={"categoryorder": "array", "categoryarray": list(df[y])[::-1]})
     return fig
