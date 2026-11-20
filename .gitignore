@@ -1,0 +1,29 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+
+# Secretos y configuración local
+.env
+.streamlit/secrets.toml
+
+# Datos originales del TFG: no se suben (la app solo usa data/app/, que sí se publica
+# con el visto bueno del tutor). Se regeneran con scripts/preparar_datos_app.py
+data/*.csv

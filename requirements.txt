@@ -1,0 +1,8 @@
+# Dependencias de la app (Streamlit Community Cloud las instala desde aquí)
+streamlit>=1.50
+pandas>=2.2
+numpy>=1.26
+plotly>=6.0
+# Misma versión con la que se entrenó models/modelo_base.joblib
+scikit-learn==1.9.1
+joblib>=1.4
