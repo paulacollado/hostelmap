@@ -1,0 +1,3 @@
+# Herramientas solo para desarrollo (no las necesita el despliegue)
+-r requirements.txt
+pytest>=8
