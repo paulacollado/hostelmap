@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from src.config import COLORES_CATEGORIA
+from src.config import COLORES_CATEGORIA, RITMO_FUERA_DE_RANGO
 
 
 def _num(x: float, decimales: int = 0) -> str:
@@ -42,12 +42,18 @@ def mostrar_ficha(local: pd.Series, serie_local: pd.DataFrame, locales: pd.DataF
     c1, c2, c3 = st.columns(3)
     primera = serie_local.iloc[0]
     c1.metric("Reseñas", _num(local["n_reviews"]),
-              delta=f"+{_num(local['n_reviews'] - primera['n_reviews'])} desde abr. 2025")
+              delta=f"+{_num(local['n_reviews'] - primera['n_reviews'])}",
+              help="Cambio desde abril de 2025")
     c2.metric("Puntuación", _num(local["score"], 1),
-              delta=_num(local["score"] - primera["score"], 1).replace("-0,0", "0,0"))
+              delta=_num(local["score"] - primera["score"], 1).replace("-0,0", "0,0"),
+              help="Cambio desde abril de 2025")
     c3.metric("Previstas / 30 días", _num(local["prediccion_30d"], 1),
-              delta=f"{_num(local['prediccion_30d'] - local['vel_2'], 1)} vs. ritmo actual",
-              delta_color="off")
+              help="Reseñas nuevas que el modelo espera en los próximos 30 días")
+    st.caption(f"Ritmo de los últimos meses: **{_num(local['vel_2'], 1)} reseñas / 30 días**")
+    if local["vel_2"] > RITMO_FUERA_DE_RANGO:
+        st.warning("Este bar tiene muchísimo más movimiento que casi todos los del histórico. "
+                   "Con tan pocos casos parecidos, el modelo tiende a quedarse corto: toma la "
+                   "predicción como un mínimo.", icon="⚠️")
 
     st.plotly_chart(grafica_evolucion(serie_local, local["prediccion_30d"], color),
                     width="stretch", config={"displayModeBar": False})

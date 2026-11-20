@@ -4,6 +4,7 @@ Ejecutar en local:  streamlit run app.py
 """
 import streamlit as st
 
+from src.config import RITMO_FUERA_DE_RANGO
 from src.datos import cargar_locales, cargar_modelo, cargar_serie
 from src.ficha import _num, mostrar_ficha
 from src.mapa import id_desde_seleccion, mapa_locales
@@ -23,8 +24,10 @@ locales = locales_con_prediccion()
 serie = cargar_serie()
 
 # --- Estado: local seleccionado (por clic en el mapa o por el buscador) ---
+# Al abrir, el bar con más actividad prevista dentro del rango fiable del modelo
 if "id_sel" not in st.session_state:
-    st.session_state.id_sel = locales.loc[locales["prediccion_30d"].idxmax(), "id_local"]
+    fiables = locales[locales["vel_2"] <= RITMO_FUERA_DE_RANGO]
+    st.session_state.id_sel = fiables.loc[fiables["prediccion_30d"].idxmax(), "id_local"]
 
 
 def _al_buscar():

@@ -25,3 +25,7 @@ COLORES_CATEGORIA = {
     "Vinos y sidra": "#8B1E3F",
     "Restaurante": "#669BBC",
 }
+
+# Por encima de este ritmo (reseñas / 30 días, percentil 99 del entrenamiento) el modelo
+# tiene muy pocos ejemplos y tiende a quedarse corto: la ficha lo avisa.
+RITMO_FUERA_DE_RANGO = 53
