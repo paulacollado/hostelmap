@@ -35,7 +35,7 @@ def grafica_evolucion(serie_local: pd.DataFrame, prediccion_30d: float, color: s
 def mostrar_ficha(local: pd.Series, serie_local: pd.DataFrame, locales: pd.DataFrame) -> None:
     color = COLORES_CATEGORIA.get(local["categoria"], "#E4572E")
 
-    st.subheader(local["nombre"])
+    st.subheader(local["nombre"], anchor=False)
     precio = local["rango_precio"] if pd.notna(local["rango_precio"]) else "precio sin datos"
     st.caption(f"{local['categoria']} · {precio}")
 
@@ -44,8 +44,9 @@ def mostrar_ficha(local: pd.Series, serie_local: pd.DataFrame, locales: pd.DataF
     c1.metric("Reseñas", _num(local["n_reviews"]),
               delta=f"+{_num(local['n_reviews'] - primera['n_reviews'])}",
               help="Cambio desde abril de 2025")
+    cambio_score = local["score"] - primera["score"]
     c2.metric("Puntuación", _num(local["score"], 1),
-              delta=_num(local["score"] - primera["score"], 1).replace("-0,0", "0,0"),
+              delta=_num(cambio_score, 1) if abs(cambio_score) >= 0.05 else None,
               help="Cambio desde abril de 2025")
     c3.metric("Previstas / 30 días", _num(local["prediccion_30d"], 1),
               help="Reseñas nuevas que el modelo espera en los próximos 30 días")

@@ -5,6 +5,7 @@ Ejecutar en local:  streamlit run app.py
 import streamlit as st
 
 from src.config import RITMO_FUERA_DE_RANGO
+from src.explicacion import mostrar_como_funciona
 from src.datos import cargar_locales, cargar_modelo, cargar_serie
 from src.ficha import _num, mostrar_ficha
 from src.mapa import id_desde_seleccion, mapa_locales
@@ -55,9 +56,11 @@ vista = locales[locales["categoria"].isin(elegidas or categorias)
                 & (locales["n_reviews"] >= min_resenas)]
 
 # --- Cabecera ---
-st.title("🍻 HostelMap")
-st.caption(f"El pulso de {_num(len(locales))} bares de Madrid · datos a "
-           f"{locales['fecha_datos'].max():%d/%m/%Y}")
+st.title("🍻 HostelMap", anchor=False)
+st.markdown(f"#### El pulso de {_num(len(locales))} bares de Madrid: dónde están, cómo "
+            "evolucionan y **cuáles van a dar que hablar el próximo mes**.")
+st.caption(f"18 fotografías de abril 2025 a septiembre 2026 · datos a "
+           f"{locales['fecha_datos'].max():%d/%m/%Y} · predicción con machine learning")
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Locales mostrados", _num(len(vista)))
@@ -99,7 +102,7 @@ with col_ficha:
 # --- Ranking de bares en racha ---
 st.divider()
 cab, criterio_col = st.columns([3, 2])
-cab.subheader("🔥 Bares en racha")
+cab.subheader("🔥 Bares en racha", anchor=False)
 cab.caption("Los que más reseñas nuevas ganarán en los próximos 30 días según el modelo "
             "(con al menos 100 reseñas y los filtros aplicados). Haz clic en una fila "
             "para ver su ficha.")
@@ -125,3 +128,9 @@ seleccion = st.dataframe(
 filas = seleccion.selection.rows if seleccion else []
 if filas:
     _seleccionar(ranking.loc[filas[0], "id_local"], "ranking")
+
+# --- Cómo funciona y pie ---
+st.divider()
+mostrar_como_funciona()
+st.caption("HostelMap · Proyecto de Desarrollo de Aplicaciones para la Visualización de Datos · "
+           "Paula Collado · [Código en GitHub](https://github.com/paulacollado/hostelmap)")
