@@ -28,8 +28,9 @@ def mapa_locales(locales: pd.DataFrame, id_seleccionado: str | None = None):
         fig.update_layout(map_center={"lat": float(sel["lat"].iloc[0]),
                                       "lon": float(sel["lon"].iloc[0])})
 
-    fig.update_layout(margin={"l": 0, "r": 0, "t": 0, "b": 0},
-                      legend={"orientation": "h", "y": -0.02, "title": None},
+    fig.update_layout(margin={"l": 0, "r": 0, "t": 30, "b": 0},
+                      legend={"orientation": "h", "x": 0, "y": 1.0, "yanchor": "bottom",
+                              "title": None, "bgcolor": "rgba(255,255,255,0)"},
                       clickmode="event+select")
     return fig
 
