@@ -2,19 +2,34 @@
 import pandas as pd
 import plotly.express as px
 
-from src.config import CENTRO_MADRID, COLORES_CATEGORIA
+from src.config import (CENTRO_MADRID, COLORES_ACTIVIDAD, COLORES_CATEGORIA,
+                        NIVELES_ACTIVIDAD)
 
 
-def mapa_locales(locales: pd.DataFrame, id_seleccionado: str | None = None):
-    """Mapa por categoría. Cada punto lleva su id_local para poder seleccionarlo."""
+def mapa_locales(locales: pd.DataFrame, id_seleccionado: str | None = None,
+                 por_actividad: bool = False):
+    """Mapa de locales coloreado por categoría o por actividad prevista.
+
+    Cada punto lleva su id_local para poder seleccionarlo con un clic.
+    """
+    if por_actividad:
+        # Los menos activos primero, para que los "en racha" queden dibujados encima
+        locales = locales.sort_values("prediccion_30d")
+        color, colores, orden = "actividad", COLORES_ACTIVIDAD, NIVELES_ACTIVIDAD
+    else:
+        color, colores, orden = "categoria", COLORES_CATEGORIA, None
+
     fig = px.scatter_map(
-        locales, lat="lat", lon="lon", color="categoria",
-        color_discrete_map=COLORES_CATEGORIA,
+        locales, lat="lat", lon="lon", color=color,
+        color_discrete_map=colores,
+        category_orders={"actividad": orden} if orden else None,
         custom_data=["id_local"],
         hover_name="nombre",
-        hover_data={"n_reviews": ":.0f", "score": ":.1f", "lat": False, "lon": False,
-                    "categoria": False},
-        labels={"n_reviews": "Reseñas", "score": "Puntuación", "categoria": "Categoría"},
+        hover_data={"categoria": True, "n_reviews": ":.0f", "score": ":.1f",
+                    "prediccion_30d": ":.1f", "lat": False, "lon": False,
+                    "actividad": False},
+        labels={"n_reviews": "Reseñas", "score": "Puntuación", "categoria": "Categoría",
+                "prediccion_30d": "Previstas / 30 días", "actividad": "Actividad prevista"},
         center=CENTRO_MADRID, zoom=11.5, height=600, map_style="carto-positron",
     )
     fig.update_traces(marker={"size": 8, "opacity": 0.8})

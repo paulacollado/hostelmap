@@ -29,3 +29,13 @@ COLORES_CATEGORIA = {
 # Por encima de este ritmo (reseñas / 30 días, percentil 99 del entrenamiento) el modelo
 # tiene muy pocos ejemplos y tiende a quedarse corto: la ficha lo avisa.
 RITMO_FUERA_DE_RANGO = 53
+
+# Niveles de actividad prevista (quintiles) y su paleta secuencial
+NIVELES_ACTIVIDAD = ["Muy baja", "Baja", "Media", "Alta", "Muy alta"]
+COLORES_ACTIVIDAD = {
+    "Muy baja": "#FDE6C8",
+    "Baja": "#F9C080",
+    "Media": "#F28C3A",
+    "Alta": "#D9480F",
+    "Muy alta": "#7F1D0D",
+}
