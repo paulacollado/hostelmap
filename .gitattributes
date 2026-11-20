@@ -1,0 +1,2 @@
+# Los notebooks son documentación del análisis: así GitHub muestra la app como Python
+*.ipynb linguist-documentation

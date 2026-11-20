@@ -46,7 +46,11 @@ src/
   datos.py                   # Carga de datos y del modelo (con caché)
   variables.py               # Variables del modelo (misma lógica que el notebook 08)
   modelo.py                  # Predicción de reseñas nuevas / 30 días
-  mapa.py                    # Mapa de locales con Plotly
+  mapa.py                    # Mapa por categoría o por actividad prevista
+  ficha.py                   # Ficha del local: cifras, evolución y predicción
+  ranking.py                 # Ranking de bares en racha
+  explicacion.py             # Sección "Cómo funciona" (datos, modelo, validación)
+tests/                       # Pruebas automáticas (pytest)
 scripts/preparar_datos_app.py  # Genera data/app/ a partir del panel completo
 data/app/                    # Datos ligeros que usa la app (parquet)
 models/modelo_base.joblib    # Modelo entrenado
@@ -68,6 +72,15 @@ Para regenerar `data/app/` hacen falta los CSV originales en `data/` (no incluid
 python scripts/preparar_datos_app.py
 ```
 
+## Pruebas
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest
+```
+
+Comprueban el cálculo de las variables del modelo, los niveles de actividad, el ranking y que la app arranca sin errores.
+
 ## Plan de trabajo
 
 - [x] **Fase 1 — Preparación de los datos:** integración, limpieza, identificación de locales y categorías.
@@ -75,9 +88,10 @@ python scripts/preparar_datos_app.py
 - [x] **Fase 3 — Variables y modelo:** proximidad, velocidad de reseñas y modelo base.
 - [ ] **Fase 4 — Desarrollo de la aplicación**
   - [x] Esqueleto de la app, indicadores y mapa por categoría
-  - [ ] Ficha de cada local con su evolución
-  - [ ] Predicción integrada en la ficha y en el mapa
-  - [ ] Mejoras de diseño e interacción
+  - [x] Ficha de cada local con su evolución (clic en el mapa o buscador)
+  - [x] Predicción integrada en la ficha y en el mapa (modo actividad prevista)
+  - [x] Ranking de bares en racha
+  - [x] Sección "Cómo funciona" y pruebas automáticas
 - [ ] **Fase 5 — Validación y despliegue**
   - [x] Despliegue en URL pública (Streamlit Community Cloud)
   - [ ] Pruebas, documentación y presentación
