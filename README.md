@@ -2,7 +2,7 @@
 
 Aplicación web interactiva para explorar la distribución territorial y la evolución temporal de los bares de Madrid y anticipar qué locales van a ganar más reseñas.
 
-> **App desplegada:** _próximamente_
+> **App desplegada:** [hostelmap.streamlit.app](https://hostelmap.streamlit.app)
 
 ## Descripción
 
@@ -78,4 +78,6 @@ python scripts/preparar_datos_app.py
   - [ ] Ficha de cada local con su evolución
   - [ ] Predicción integrada en la ficha y en el mapa
   - [ ] Mejoras de diseño e interacción
-- [ ] **Fase 5 — Validación y despliegue:** despliegue en URL pública, pruebas, documentación y presentación.
+- [ ] **Fase 5 — Validación y despliegue**
+  - [x] Despliegue en URL pública (Streamlit Community Cloud)
+  - [ ] Pruebas, documentación y presentación
